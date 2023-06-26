@@ -48,22 +48,32 @@ class Main:
                                                       evaluation_strategy="epoch"
                                                       # TODO: decide specific
                                                       )
+        self.metric = evaluate.load("rouge")
         self.trainer = Seq2SeqTrainer(model=self.model, args=self.training_args,
                                       train_dataset=self.train_set,
                                       eval_dataset=self.validation_set,
                                       tokenizer=self.tokenizer,
                                       data_collator=self.data_collator,
-                                      compute_metrics=compute_metrics # TODO: define
+                                      compute_metrics=self.compute_metrics # TODO: define
                                       )
+    def run(self):
 
+
+    def compute_metrics(self, pred):
+        predictions = [pred['generated_text'] for pred in pred.predictions]
+        references = [pred['summary'] for pred in pred.label_ids]
+        scores = self.metric.compute(predictions=predictions,
+                                     references=references)
+        return scores
 
 
     def __load_dataset(self):
         pass
 
     def __split_train_val_test(self):
+        dataset = self.dataset["train"]
         # split dataset into validation and train, and test
-        train_and_validation, test = train_test_split(self.dataset,
+        train_and_validation, test = train_test_split(dataset,
                                                       test_size=TEST_SIZE,
                                                       random_state=1)
         train, validation = train_test_split(train_and_validation,
