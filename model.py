@@ -12,6 +12,7 @@ import evaluate  # for rouge = evaluate.load("rouge")
 # tokenizer
 from transformers import AutoTokenizer, AutoConfig, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, \
     Seq2SeqTrainingArguments, Seq2SeqTrainer
+from transformers.trainer_utils import PredictionOutput
 
 """
 https://huggingface.co/docs/transformers/tasks/summarization
@@ -57,7 +58,10 @@ class Main:
                                       compute_metrics=self.compute_metrics # TODO: define
                                       )
     def run(self):
-
+        self.train()
+        self.evaluate()
+        results = self.predict()
+        self.save_results(results)
 
     def compute_metrics(self, pred):
         predictions = [pred['generated_text'] for pred in pred.predictions]
@@ -66,9 +70,6 @@ class Main:
                                      references=references)
         return scores
 
-
-    def __load_dataset(self):
-        pass
 
     def __split_train_val_test(self):
         dataset = self.dataset["train"]
@@ -96,6 +97,26 @@ class Main:
     def train(self):
         self.trainer.train()
 
+    def evaluate(self):
+        self.trainer.evaluate()
+
+    def predict(self)->PredictionOutput:
+        results = self.trainer.predict(self.test_set)
+        return results
+
+    """ 
+        save predictions to csv
+    """
+    def save_results(self, results: PredictionOutput):
+        results_df = pd.DataFrame(columns=["text", "summary", "prediction"])
+        for element, pred in zip(self.test_set, results):
+            new_row = [element["text"], element["summary"], pred.predictions]
+            results_df.append(new_row)
+
+        results_df.to_csv("prediction_results.csv")
+
+
 
 if __name__ == '__main__':
     model = Main(dataset_path="data.csv")
+    model.run()
