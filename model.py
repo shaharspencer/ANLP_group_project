@@ -10,7 +10,8 @@ from sklearn.model_selection import train_test_split
 from datasets import load_dataset
 import evaluate  # for rouge = evaluate.load("rouge")
 # tokenizer
-from transformers import AutoTokenizer, AutoConfig, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, \
+from transformers import AutoTokenizer, AutoConfig, DataCollatorForSeq2Seq, \
+    AutoModelForSeq2SeqLM, \
     Seq2SeqTrainingArguments, Seq2SeqTrainer
 from transformers.trainer_utils import PredictionOutput
 
@@ -55,7 +56,8 @@ class Main:
                                       eval_dataset=self.validation_set,
                                       tokenizer=self.tokenizer,
                                       data_collator=self.data_collator,
-                                      compute_metrics=self.compute_metrics # TODO: define
+                                      compute_metrics=self.compute_metrics
+                                      # TODO: define
                                       )
     def run(self):
         self.train()
@@ -63,11 +65,14 @@ class Main:
         results = self.predict()
         self.save_results(results)
 
-    def compute_metrics(self, pred):
-        predictions = [pred['generated_text'] for pred in pred.predictions]
-        references = [pred['summary'] for pred in pred.label_ids]
-        scores = self.metric.compute(predictions=predictions,
-                                     references=references)
+    def compute_metrics(self, pred:PredictionOutput):
+        predictions, labels = pred
+        decoded_predictions = self.tokenizer.batch_decode(predictions,
+                                                     skip_special_tokens=True)
+        decoded_labels = self.tokenizer.batch_decode(labels,
+                                                     skip_special_tokens=True)
+        scores = self.metric.compute(predictions=decoded_predictions,
+                                     references=decoded_labels)
         return scores
 
 
@@ -111,8 +116,7 @@ class Main:
         results_df = pd.DataFrame(columns=["text", "summary", "prediction"])
         for element, pred in zip(self.test_set, results):
             new_row = [element["text"], element["summary"], pred.predictions]
-            results_df.append(new_row)
-
+            results_df = results_df.append(new_row)
         results_df.to_csv("prediction_results.csv")
 
 
