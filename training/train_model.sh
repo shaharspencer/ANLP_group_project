@@ -21,7 +21,7 @@ python run_summarization.py \
     --train_file ../data_files/abstracts_introductions_train_split.csv \
     --validation_file ../data_files/abstracts_introductions_validation_split.csv \
     --source_prefix "summarize: " \
-    --output_dir /tmp/tst-summarization \
+    --output_dir trained_t5_small_model \
     --overwrite_output_dir \
     --per_device_train_batch_size=4 \
     --per_device_eval_batch_size=4 \
