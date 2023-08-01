@@ -163,39 +163,37 @@ def main():
 
     for file_path in failed: #the code failed to process these files/extract introduction - the list is automatically created
         os.remove(save_path + query + "/pdfs/" + file_path + ".pdf")
-    additional_failed = ['Tooth Instance Segmentation from Cone-Beam CT Images through Point-based Detection and Gaussian Disentanglement',
-                         'Semantic Representation and Inference for NLP',
-                         'AssemblyNet: A Novel Deep Decision-Making Process for Whole Brain MRI Segmentation',
-                         'Bootstrapping Deep Neural Networks from Approximate Image Processing Pipelines',
-                         'Neural Graph Embedding Methods for Natural Language Processing',
-                         'The Secret Revealer: Generative Model-Inversion Attacks Against Deep Neural Networks',
-                         'Logic Tensor Networks for Semantic Image Interpretation',
-                         'EGC: Image Generation and Classification via a Diffusion Energy-Based Model',
-                         'Going Deeper into Semi-supervised Person Re-identification',
-                         'Learning Two Layer Rectified Neural Networks in Polynomial Time',
-                         'Robust Hierarchical Graph Classification with Subgraph Attention',
-                         'Exploring the importance of context and embeddings in neural NER models for task-oriented dialogue systems',
-                         'Super-resolution and denoising of fluid flow using physics-informed convolutional neural networks without high-resolution labels',
-                         'Deep tree-ensembles for multi-output prediction',
-                         'Exploring difference in public perceptions on HPV vaccine between gender groups from Twitter using deep learning',
-                         'Learning to Rectify for Robust Learning with Noisy Labels','Data Augmentation of Wearable Sensor Data for Parkinson\'s Disease Monitoring using Convolutional Neural Networks',
-                         'PAL : Pretext-based Active Learning',
-                         'Task-specific Word Identification from Short Texts Using a Convolutional Neural Network',
-                         'Elucidating Meta-Structures of Noisy Labels in Semantic Segmentation by Deep Neural Networks',
-                         'Image Classification with Deep Learning in the Presence of Noisy Labels: A Survey',
-                         'Balanced Symmetric Cross Entropy for Large Scale Imbalanced and Noisy Data'] #the code extracted the introduction unsuccesfully - this list is manually created
-    for file_path in additional_failed:
-        os.remove(save_path + query + "/pdfs/" + file_path + ".txt")
-        os.remove(save_path + query + "/text/" + file_path + ".txt")
-        os.remove(save_path + query + "/introductions/" + file_path + ".txt")
-        os.remove(save_path + query + "/abstracts/" + file_path + ".txt")
+    # additional_failed = ['Tooth Instance Segmentation from Cone-Beam CT Images through Point-based Detection and Gaussian Disentanglement',
+    #                      'Semantic Representation and Inference for NLP',
+    #                      'AssemblyNet: A Novel Deep Decision-Making Process for Whole Brain MRI Segmentation',
+    #                      'Bootstrapping Deep Neural Networks from Approximate Image Processing Pipelines',
+    #                      'Neural Graph Embedding Methods for Natural Language Processing',
+    #                      'The Secret Revealer: Generative Model-Inversion Attacks Against Deep Neural Networks',
+    #                      'Logic Tensor Networks for Semantic Image Interpretation',
+    #                      'EGC: Image Generation and Classification via a Diffusion Energy-Based Model',
+    #                      'Going Deeper into Semi-supervised Person Re-identification',
+    #                      'Learning Two Layer Rectified Neural Networks in Polynomial Time',
+    #                      'Robust Hierarchical Graph Classification with Subgraph Attention',
+    #                      'Exploring the importance of context and embeddings in neural NER models for task-oriented dialogue systems',
+    #                      'Super-resolution and denoising of fluid flow using physics-informed convolutional neural networks without high-resolution labels',
+    #                      'Deep tree-ensembles for multi-output prediction',
+    #                      'Exploring difference in public perceptions on HPV vaccine between gender groups from Twitter using deep learning',
+    #                      'Learning to Rectify for Robust Learning with Noisy Labels','Data Augmentation of Wearable Sensor Data for Parkinson\'s Disease Monitoring using Convolutional Neural Networks',
+    #                      'PAL : Pretext-based Active Learning',
+    #                      'Task-specific Word Identification from Short Texts Using a Convolutional Neural Network',
+    #                      'Elucidating Meta-Structures of Noisy Labels in Semantic Segmentation by Deep Neural Networks',
+    #                      'Image Classification with Deep Learning in the Presence of Noisy Labels: A Survey',
+    #                      'Balanced Symmetric Cross Entropy for Large Scale Imbalanced and Noisy Data'] #the code extracted the introduction unsuccesfully - this list is manually created
+    # for file_path in additional_failed:
+    #     os.remove(save_path + query + "/pdfs/" + file_path + ".txt")
+    #     os.remove(save_path + query + "/text/" + file_path + ".txt")
+    #     os.remove(save_path + query + "/introductions/" + file_path + ".txt")
+    #     os.remove(save_path + query + "/abstracts/" + file_path + ".txt")
 
     print(len(failed))
-    print(len(additional_failed))
+    # print(len(additional_failed))
     df = pd.DataFrame({'titles': titles, 'starts': starts, 'ends': ends})
     df.to_csv(save_path+query+'/ExtractedIntroductionsData.csv')
-
-
 
 
 if __name__ == "__main__":
