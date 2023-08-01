@@ -18,8 +18,8 @@ python examples/pytorch/summarization/run_summarization.py \
     --model_name_or_path t5-small \
     --do_train \
     --do_eval \
-    --train_file data_files/abstracts_introductions_train_split.csv \
-    --validation_file data_files/abstracts_introductions_validation_split.csv \
+    --train_file ../data_files/abstracts_introductions_train_split.csv \
+    --validation_file ../data_files/abstracts_introductions_validation_split.csv \
     --source_prefix "summarize: " \
     --output_dir /tmp/tst-summarization \
     --overwrite_output_dir \
