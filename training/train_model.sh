@@ -14,7 +14,7 @@ source /cs/snapless/gabis/shaharspencer/anlp_project_venv/bin/activate
 
 module load cuda/11.7
 
-python examples/pytorch/summarization/run_summarization.py \
+python run_summarization.py \
     --model_name_or_path t5-small \
     --do_train \
     --do_eval \
