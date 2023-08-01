@@ -2,7 +2,7 @@
 #SBATCH --gres=gpu:5 #request gpu resources
 #SBATCH --nodes=1 # request nodes
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task= #request cpu resources
+#SBATCH --cpus-per-task=1 #request cpu resources
 #SBATCH --time=20:00:00
 #SBATCH --job-name=my_gpu_job
 #SBATCH --output=train_script_output.out     # Custom output file for standard output
