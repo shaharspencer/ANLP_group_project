@@ -128,7 +128,8 @@ def main():
     #topic = input("Enter the topic you need to search for : ")
     #num_papers = input("Enter the max number of papers: ")
     save_path = '/Users/wrystrn/Documents/ANLP/final_project/'
-    query = "noisy labels identification using neural networks ensemble"
+    # query = "noisy labels identification using neural networks ensemble"
+    query = "quantum computing"
     if not os.path.exists(save_path+query):
         os.mkdir(save_path+query)
     if not os.path.exists(save_path+query+"/pdfs/"):
