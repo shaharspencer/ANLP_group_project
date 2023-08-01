@@ -8,8 +8,11 @@
 #SBATCH --output=train_script_output.out     # Custom output file for standard output
 #SBATCH --error=train_script_error.err      # Custom output file for standard error
 
+module load cuda/11.7
 # activate virtual environment
 source /cs/snapless/gabis/shaharspencer/anlp_project_venv/bin/activate
+
+module load cuda/11.7
 
 python examples/pytorch/summarization/run_summarization.py \
     --model_name_or_path t5-small \
@@ -22,4 +25,6 @@ python examples/pytorch/summarization/run_summarization.py \
     --overwrite_output_dir \
     --per_device_train_batch_size=4 \
     --per_device_eval_batch_size=4 \
-    --predict_with_generate
+    --predict_with_generate \
+     --text_column introduction \
+    --summary_column abstract
