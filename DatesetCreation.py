@@ -1,4 +1,5 @@
 import os
+import re
 import arxiv
 import pandas as pd
 import requests
@@ -69,11 +70,11 @@ def extract_introduction(full_file_path, save_path, title):
         lines = f.readlines()
     start = -1
     end = -1
-    for i in range(len(lines)):
-        if "introduction" in lines[i].lower() or "i ntroduction" in lines[i].lower():
+    for i, line in enumerate(lines):
+        if re.match(r".*i\s*ntroduction.*", line.lower()):
             if start == -1:
                 start = i
-        if "II. method" in lines[i].lower() or "2. method" in lines[i].lower() or "2. related work" in lines[i].lower() or "2 related work" in lines[i].lower() or "II related work" in lines[i] or "II. related work" in lines[i] or "2. r elated work" in lines[i] or "2 r elated work" in lines[i].lower() or "II r elated work" in lines[i] or "II. r elated work" in lines[i]:
+        elif re.match(r".*(\d|(ii?))\s*([.]\s*)?((m\s*ethod)|(r\s*elated work).*)", line.lower()):
             end = i
             break
     f.close()
