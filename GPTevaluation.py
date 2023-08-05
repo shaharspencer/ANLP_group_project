@@ -24,10 +24,9 @@ def evaluate_with_gpt(introduction, abstract, model_name):
     chain = load_qa_chain(llm, chain_type="stuff", prompt=PROMPT)
     result = chain({"input_documents": [introduction], "question": abstract}, return_only_outputs=True)
     try:
-        results = re.search(r"()|()", result['output_text'])
-        scores = result['output_text'].strip("()").split(",")
-        f1_score = 2*int(scores[0])*int(scores[1])/(int(scores[0])+int(scores[1]))
-        final_result = {"Relevence (precision) score": int(scores[0]), "Accuracy (recall) score": int(scores[1]), "F1 score":f1_score}
+        results = re.search(r"\(\s*([^,]+)\s*,\s*([^)]+)\s*\)", result['output_text'])
+        f1_score = 2*float(results.group(1))*float(results.group(2))/(float(results.group(1))+float(results.group(2)))
+        final_result = {"Relevence (precision) score": float(results.group(1)), "Accuracy (recall) score": float(results.group(2)), "F1 score": f1_score}
     except:
         final_result = result
     return final_result
