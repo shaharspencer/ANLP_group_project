@@ -1,33 +1,37 @@
 import os
+import re
 os.environ["OPENAI_API_KEY"] = "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"
 from langchain import PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.docstore.document import Document
 
+
 def evaluate_with_gpt(introduction, abstract, model_name):
     llm = ChatOpenAI(model_name=model_name)
-    prompt_template = "I will now give you an introduction of a scientific paper and an abstract proposal written based on this introduction. Please rate the abstract, based on the following parameters:" \
-                      "1. Relevence - list the main points of the paper described in the introduction, and whether they appear in the text. Provide a score between 0 (no details in the abstract) to 100 (all the introduction details are in the abstract)" \
-                      "2. Accuracy - Are there any details that appear in the abstract but not in the introduction? if so, list them. Provide a score between 0 (there are many details in the abstract that do not appear in the introduction) to 100 (there are no extra details in the abstract)" \
-                      "Lastly, print only the score in exactly this format (relevence score,accuracy score)" \
-                      "Here is the introduction:" \
-                      "{context}" \
-                      "Here is the proposed abstract:" \
-                      "{question}" \
+    prompt_template = "I will now give you an introduction of a scientific paper and an abstract proposal written based on this introduction. Please rate how well the abstract sumarizes the article, based on the following parameters:" \
+                      "\n1. Relevence - whether the main points of the paper described in the introduction appear in the abstract. Provide a score between 0 (no details in the abstract) to 100 (all the introduction details are in the abstract)." \
+                      "\n2. Accuracy - whether there are any details that appear in the abstract but not in the introduction. Provide a score between 0 (there are many details in the abstract that do not appear in the introduction) to 100 (there are no extra details in the abstract)." \
+                      "\nYour output should only be the score in exactly this format: (Relevence score,Accuracy score).\n" \
+                      "Here is the introduction:\n" \
+                      "{context}\n" \
+                      "Here is the proposed abstract:\n" \
+                      "{question}\n" \
                       "Your answer:"
     PROMPT = PromptTemplate(
         template=prompt_template, input_variables=["context", "question"]
     )
-    chain = load_qa_chain(llm, chain_type="stuff", prompt = PROMPT)
+    chain = load_qa_chain(llm, chain_type="stuff", prompt=PROMPT)
     result = chain({"input_documents": [introduction], "question": abstract}, return_only_outputs=True)
     try:
+        results = re.search(r"()|()", result['output_text'])
         scores = result['output_text'].strip("()").split(",")
         f1_score = 2*int(scores[0])*int(scores[1])/(int(scores[0])+int(scores[1]))
         final_result = {"Relevence (precision) score": int(scores[0]), "Accuracy (recall) score": int(scores[1]), "F1 score":f1_score}
     except:
         final_result = result
     return final_result
+
 
 def main(): #here is a usage example
     model_name = 'gpt-3.5-turbo-16k'
@@ -36,6 +40,7 @@ def main(): #here is a usage example
     text_document = Document(page_content=text)
     gpt_evaluation = evaluate_with_gpt(text_document, abstract, model_name)
     print(gpt_evaluation)
+
 
 if __name__ == "__main__":
     main()

@@ -6,6 +6,7 @@ import requests
 import PyPDF2
 from tqdm import tqdm
 
+
 def query_arxiv(query, num_papers):
     all_data = []
     query = query.strip('\"')
