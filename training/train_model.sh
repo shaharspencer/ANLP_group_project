@@ -1,13 +1,11 @@
 #!/bin/bash
-#SBATCH --gres=gpu:a5000:1 #request gpu resources
+#SBATCH --gres=gpu:1,vmem:15G #request gpu resources
 #SBATCH --mem=32G
-#SBATCH --nodes=1 # request nodes
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=1 #request cpu resources
+#SBATCH -c 8
 #SBATCH --time=20:00:00
 #SBATCH --job-name=my_gpu_job
-#SBATCH --output=train_script_output.out     # Custom output file for standard output
-#SBATCH --error=train_script_error.err      # Custom output file for standard error
+#SBATCH --output=train_script_output_t5_large.out  # Custom output file for standard output
+#SBATCH --error=train_script_error_t5_large.err    # Custom output file for standard error
 
 module load cuda/11.7
 # activate virtual environment
@@ -18,7 +16,7 @@ module load cuda/11.7
 python /cs/snapless/gabis/shaharspencer/ANLP_group_project/prepare.py
 
 python /cs/snapless/gabis/shaharspencer/ANLP_group_project/training/run_summarization.py \
-    --model_name_or_path t5-small \
+    --model_name_or_path t5-large \
     --do_train \
     --do_eval \
     --do_predict \
@@ -26,7 +24,7 @@ python /cs/snapless/gabis/shaharspencer/ANLP_group_project/training/run_summariz
     --validation_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/neural_net/abstracts_introductions_validation_split.csv \
     --test_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/neural_net/abstracts_introductions_test_split.csv \
     --source_prefix "summarize: " \
-    --output_dir /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_small_model_neural_net \
+    --output_dir /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_net \
     --overwrite_output_dir=True \
     --per_device_train_batch_size=4 \
     --per_device_eval_batch_size=4 \
