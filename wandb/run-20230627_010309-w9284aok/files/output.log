@@ -1,0 +1,11 @@
+
+  0%|          | 0/3 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "C:\Users\User\anaconda3\lib\site-packages\torch\utils\data\dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "C:\Users\User\anaconda3\lib\site-packages\torch\utils\data\dataloader.py", line 721, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "C:\Users\User\anaconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 49, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\User\anaconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 49, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+KeyError: 2

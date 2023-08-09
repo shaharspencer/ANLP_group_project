@@ -1,0 +1,42 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.9.13",
+    "heartbeatAt": "2023-06-26T22:03:11.081759",
+    "startedAt": "2023-06-26T22:03:09.610081",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:\\Users\\User\\PycharmProjects\\ANLP_group_project\\model.py",
+    "codePath": "model.py",
+    "git": {
+        "remote": "https://github.com/shaharspencer/ANLP_group_project.git",
+        "commit": "df03c0c7bb44bf9fd6fffd4a446953382c10c83f"
+    },
+    "email": "shahar.spencer@mail.huji.ac.il",
+    "root": "C:/Users/User/PycharmProjects/ANLP_group_project",
+    "host": "DESKTOP-RTS83TE",
+    "username": "User",
+    "executable": "C:\\Users\\User\\anaconda3\\python.exe",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 2101.0,
+        "min": 0.0,
+        "max": 2101.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2101.0,
+            "min": 0.0,
+            "max": 2101.0
+        }
+    ],
+    "disk": {
+        "total": 236.85408401489258,
+        "used": 232.41641998291016
+    },
+    "memory": {
+        "total": 15.81137466430664
+    }
+}
