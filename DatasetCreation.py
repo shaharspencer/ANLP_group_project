@@ -128,24 +128,25 @@ def create_csv(path):
 def main():
     #topic = input("Enter the topic you need to search for : ")
     #num_papers = input("Enter the max number of papers: ")
-    save_path = '/Users/wrystrn/Documents/ANLP/final_project/'
+    save_path = './'
     # query = "noisy labels identification using neural networks ensemble"
     query = "quantum computing"
-    if not os.path.exists(save_path+query):
-        os.mkdir(save_path+query)
-    if not os.path.exists(save_path+query+"/pdfs/"):
-        os.mkdir(save_path+query+"/pdfs/")
-    if not os.path.exists(save_path + query + "/text/"):
-        os.mkdir(save_path + query + "/text/")
-    if not os.path.exists(save_path+query+"/introductions/"):
-        os.mkdir(save_path+query+"/introductions/")
-    if not os.path.exists(save_path+query+"/abstracts/"):
-        os.mkdir(save_path+query+"/abstracts/")
+    directory_name = query.replace(" ", "_")
+    if not os.path.exists(save_path+directory_name):
+        os.mkdir(save_path+directory_name)
+    if not os.path.exists(save_path+directory_name+"/pdfs/"):
+        os.mkdir(save_path+directory_name+"/pdfs/")
+    if not os.path.exists(save_path + directory_name + "/text/"):
+        os.mkdir(save_path+directory_name+ "/text/")
+    if not os.path.exists(save_path+directory_name+"/introductions/"):
+        os.mkdir(save_path+directory_name+"/introductions/")
+    if not os.path.exists(save_path+directory_name+"/abstracts/"):
+        os.mkdir(save_path+directory_name+"/abstracts/")
     num_papers = 1800
     print(query)
     df = query_arxiv(query, num_papers)
     abstracts = df['Summary']
-    file_paths = download_papers(df['Title'], df['URL'], save_path+query+"/pdfs/")
+    file_paths = download_papers(df['Title'], df['URL'], save_path+directory_name+"/pdfs/")
     titles = []
     starts = []
     ends = []
@@ -153,9 +154,9 @@ def main():
     for file_path, title, abstract in tqdm(zip(file_paths, df['Title'], abstracts), total = len(file_paths)):
         title = title.replace('/', '_')
         try:
-            text_path = pdf_to_text(file_path, save_path + query + "/text/", title)
-            start, end = extract_introduction(text_path, save_path+query+'/introductions/', title)
-            with open(save_path + query + '/abstracts/' + title + ".txt", "w") as f:
+            text_path = pdf_to_text(file_path, save_path+directory_name+"/text/", title)
+            start, end = extract_introduction(text_path, save_path+directory_name+'/introductions/', title)
+            with open(save_path+directory_name+'/abstracts/' + title + ".txt", "w") as f:
                 f.write(abstract)
             titles.append(title)
             starts.append(start)
@@ -164,7 +165,7 @@ def main():
             failed.append(title)
 
     for file_path in failed: #the code failed to process these files/extract introduction - the list is automatically created
-        os.remove(save_path + query + "/pdfs/" + file_path + ".pdf")
+        os.remove(save_path + directory_name + "/pdfs/" + file_path + ".pdf")
     # additional_failed = ['Tooth Instance Segmentation from Cone-Beam CT Images through Point-based Detection and Gaussian Disentanglement',
     #                      'Semantic Representation and Inference for NLP',
     #                      'AssemblyNet: A Novel Deep Decision-Making Process for Whole Brain MRI Segmentation',
@@ -187,15 +188,15 @@ def main():
     #                      'Image Classification with Deep Learning in the Presence of Noisy Labels: A Survey',
     #                      'Balanced Symmetric Cross Entropy for Large Scale Imbalanced and Noisy Data'] #the code extracted the introduction unsuccesfully - this list is manually created
     # for file_path in additional_failed:
-    #     os.remove(save_path + query + "/pdfs/" + file_path + ".txt")
-    #     os.remove(save_path + query + "/text/" + file_path + ".txt")
-    #     os.remove(save_path + query + "/introductions/" + file_path + ".txt")
-    #     os.remove(save_path + query + "/abstracts/" + file_path + ".txt")
+    #     os.remove(save_path + directory_name + "/pdfs/" + file_path + ".txt")
+    #     os.remove(save_path + directory_name + "/text/" + file_path + ".txt")
+    #     os.remove(save_path + directory_name + "/introductions/" + file_path + ".txt")
+    #     os.remove(save_path + directory_name + "/abstracts/" + file_path + ".txt")
 
     print(len(failed))
     # print(len(additional_failed))
     df = pd.DataFrame({'titles': titles, 'starts': starts, 'ends': ends})
-    df.to_csv(save_path+query+'/ExtractedIntroductionsData.csv')
+    df.to_csv(save_path+directory_name+'/ExtractedIntroductionsData.csv')
 
 
 if __name__ == "__main__":
