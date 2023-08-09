@@ -22,7 +22,7 @@ cd /cs/snapless/gabis/shaharspencer/ANLP_group_project/
 
 python prepare.py
 
-python training/run_summarization.py \
+python model_scripts/training/run_summarization.py \
     --model_name_or_path model_outputs/trained_t5_large_model_GENERIC \
     --config_name model_outputs/trained_t5_large_model_GENERIC/config.json \
     --training_dataset_name GENERIC \
