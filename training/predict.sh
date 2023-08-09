@@ -2,7 +2,7 @@
 #SBATCH --gres=gpu:1,vmem:24G #request gpu resources
 #SBATCH --mem=32G
 #SBATCH -c 8
-#SBATCH --time=20:00:00
+#SBATCH --time=01:00:00
 #SBATCH --job-name=my_gpu_job
 #SBATCH --output=train_script_output_t5_large.out  # Custom output file for standard output
 #SBATCH --error=train_script_error_t5_large.err    # Custom output file for standard error
