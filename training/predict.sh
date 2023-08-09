@@ -6,8 +6,8 @@
 #SBATCH --cpus-per-task=1 #request cpu resources
 #SBATCH --time=20:00:00
 #SBATCH --job-name=my_gpu_job
-#SBATCH --output=train_script_output.out     # Custom output file for standard output
-#SBATCH --error=train_script_error.err      # Custom output file for standard error
+#SBATCH --output=predict_script_output.out     # Custom output file for standard output
+#SBATCH --error=predict_script_error.err      # Custom output file for standard error
 
 module load cuda/11.7
 # activate virtual environment
