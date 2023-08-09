@@ -141,6 +141,14 @@ class DataTrainingArguments:
         default=None,
         metadata={"help": "The name of the column in the datasets containing the summaries (for summarization)."},
     )
+    training_dataset_name: Optional[str] = field(
+        default=None,
+        metadata={"help": "Name of dataset trained on, used to identify which model out of 3X3"},
+    )
+    prediction_dataset_name: Optional[str] = field(
+        default=None,
+        metadata={"help": "Name of dataset predicted on, used to identify which model out of 3X3"},
+    )
     train_file: Optional[str] = field(
         default=None, metadata={"help": "The input training data file (a jsonlines or csv file)."}
     )
@@ -727,7 +735,9 @@ def main():
                 )
                 predictions = [pred.strip() for pred in predictions]
                 print(f"\n\nMy DEBUGGING message: len(predictions) == {len(predictions)}\n\nEASY FIND\n\n")
-                output_prediction_file = os.path.join(training_args.output_dir, "generated_predictions.txt")
+                output_prediction_file = os.path.join(os.path.join("data_files", training_args.prediction_dataset_name),
+                                                      f"generated_predictions_by_training_on{training_args.training_dataset_name}.txt")
+
                 with open(output_prediction_file, "w", encoding="utf-8") as writer:
                     writer.write("\n".join(predictions))
 
