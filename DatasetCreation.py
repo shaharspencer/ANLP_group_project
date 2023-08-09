@@ -28,15 +28,20 @@ def query_arxiv(query, num_papers):
     df = pd.DataFrame(all_data, columns=column_names)
     return df
 
+
 def download_papers(paper_titles, pdf_urls, save_path):
     paths = []
+    print("Starting TQDM of download_papers")
     for pdf_url, title in tqdm(zip(pdf_urls, paper_titles), total = len(pdf_urls)):
-        if not os.path.exists(save_path + title + ".pdf"):
+        path = save_path + title.replace('/', '_') + ".pdf"
+        if not os.path.exists(path):
             response = requests.get(pdf_url)
-            title = title.replace('/', '_')
-            with open(save_path + title + ".pdf", 'wb') as file:
+            with open(path, 'wb') as file:
                 file.write(response.content)
-        paths.append(save_path + title + ".pdf")
+            print(f"Yay! Following path was downloaded: {path}")
+        else:
+            print(f"Hmm... Following path existed so was not downloaded: {path}")
+        paths.append(path)
     return paths
 
 def pdf_to_text(file_path, save_path, title):
@@ -65,6 +70,7 @@ def pdf_to_text(file_path, save_path, title):
     pdfFileObj.close()
     return save_path + title + ".txt"
 
+
 def extract_introduction(full_file_path, save_path, title):
     title = title.replace('/', '_')
     with open(full_file_path) as f:
@@ -87,6 +93,7 @@ def extract_introduction(full_file_path, save_path, title):
 
     return lines[start], lines[end]
 
+
 def parser(text_lines):
     text = ""
     for line in text_lines:
@@ -96,12 +103,14 @@ def parser(text_lines):
 
     return text
 
+
 def list_files(directory):
     file_names = []
     for root, dirs, files in os.walk(directory):
         for file in files:
             file_names.append(file)
     return file_names
+
 
 def create_csv(path):
     abstract_folder_path, introduction_folder_path = path+"abstracts/", path+'introductions/'
@@ -151,10 +160,13 @@ def main():
     starts = []
     ends = []
     failed = []
-    for file_path, title, abstract in tqdm(zip(file_paths, df['Title'], abstracts), total = len(file_paths)):
+    df.to_csv(save_path + "all_found_urls_with_abstracts.csv")
+    print("Starting TQDM of pdf_to_text")
+    for file_path, title, abstract in tqdm(zip(file_paths, df['Title'], abstracts), total=len(file_paths)):
         title = title.replace('/', '_')
         try:
             text_path = pdf_to_text(file_path, save_path+directory_name+"/text/", title)
+            print(f"file path that was converted to text: {file_path}")
             start, end = extract_introduction(text_path, save_path+directory_name+'/introductions/', title)
             with open(save_path+directory_name+'/abstracts/' + title + ".txt", "w") as f:
                 f.write(abstract)
