@@ -63,10 +63,10 @@ def process_pairs(input_csv, input_txt, output_csv, processing_function):
             csv_writer.writerow(csv_row + [prediction] + [result])
 
 def main():
-    dir = "data_files/noisy_label"
+    dir = "data_files/neural_network_verification"
     input_csv_file = os.path.join(dir,'abstracts_introductions_test_split.csv')
-    input_txt_file = os.path.join(dir,'generated_predictions_TRAIN_verification_TEST_noisy_label.txt')
-    output_csv_file = os.path.join(dir,'FOR_GPT_generated_predictions_TRAIN_verification_TEST_noisy_label.csv')
+    input_txt_file = os.path.join(dir,'generated_predictions_TRAIN_noisy_label_TEST_verification.txt')
+    output_csv_file = os.path.join(dir,'FOR_GPT_generated_predictions_TRAIN_noisy_label_TEST_verification.csv')
 
     # Call the method with your processing function
     process_pairs(input_csv_file, input_txt_file, output_csv_file, evaluate_with_gpt)
