@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH
 #SBATCH --gres=gpu:1,vmem:15G #request gpu resources
 #SBATCH --mem=32G
 #SBATCH -c 8
