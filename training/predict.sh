@@ -15,7 +15,6 @@ module load cuda/11.7
 
 python /cs/snapless/gabis/shaharspencer/ANLP_group_project/prepare.py
 
-/cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_net
 
 python /cs/snapless/gabis/shaharspencer/ANLP_group_project/training/run_summarization.py \
     --config_name /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_net/config.json \
@@ -23,7 +22,7 @@ python /cs/snapless/gabis/shaharspencer/ANLP_group_project/training/run_summariz
     --do_predict \
     --test_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/neural_network_verification/abstracts_introductions_test_split.csv \
     --source_prefix "summarize: " \
-    --output_dir /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_network_verification \
+    --output_dir /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_net \
     --per_device_train_batch_size=2 \
     --per_device_eval_batch_size=2 \
     --predict_with_generate \
