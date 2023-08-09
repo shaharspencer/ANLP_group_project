@@ -19,6 +19,7 @@ python prepare.py
 
 python training/run_summarization.py \
     --model_name_or_path /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_small_model_neural_net \
+    --config_name /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_small_model_neural_net/config.json\
     --do_predict \
     --test_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/neural_net/abstracts_introductions_test_split.csv \
     --source_prefix "summarize: " \

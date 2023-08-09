@@ -18,6 +18,7 @@ module load cuda/11.7
 python /cs/snapless/gabis/shaharspencer/ANLP_group_project/prepare.py
 
 python /cs/snapless/gabis/shaharspencer/ANLP_group_project/training/run_summarization.py \
+    --config_name /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_small_model_neural_net/config.json\
     --model_name_or_path /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_small_model_neural_net \
     --do_predict \
     --test_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/neural_net/abstracts_introductions_test_split.csv \
