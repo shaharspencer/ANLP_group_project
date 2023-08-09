@@ -20,7 +20,7 @@ python /cs/snapless/gabis/shaharspencer/ANLP_group_project/training/run_summariz
     --config_name /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_network_verification/config.json \
     --model_name_or_path /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_network_verification \
     --do_predict \
-    --test_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/neural_network_verification/abstracts_introductions_test_split.csv \
+    --test_file /cs/snapless/gabis/shaharspencer/ANLP_group_project/data_files/noisy_label/abstracts_introductions_test_split.csv \
     --source_prefix "summarize: " \
     --output_dir /cs/snapless/gabis/shaharspencer/ANLP_group_project/model_outputs/trained_t5_large_model_neural_network_verification \
     --per_device_train_batch_size=2 \
