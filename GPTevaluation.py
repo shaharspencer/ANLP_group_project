@@ -66,7 +66,7 @@ def main():
     dir = "data_files/routing_protocols"
     input_csv_file = os.path.join(dir,'abstracts_introductions_test_split.csv')
     input_txt_file = os.path.join(dir,'generated_predictions_TRAIN_protocols_TEST_protocols.txt')
-    output_csv_file = os.path.join(dir,'FOR_GPT_generated_predictions_TRAIN_protocols_TEST_protocols.txt')
+    output_csv_file = os.path.join(dir,'FOR_GPT_generated_predictions_TRAIN_protocols_TEST_protocols.csv')
 
     # Call the method with your processing function
     process_pairs(input_csv_file, input_txt_file, output_csv_file, evaluate_with_gpt)
